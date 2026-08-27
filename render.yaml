@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: taiwanese-tone-sandhi
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    autoDeploy: true
