@@ -24,7 +24,7 @@ import re
 
 from tauphahji_cmd import tàuphahjī
 from 臺灣言語工具.解析整理.拆文分析器 import 拆文分析器
-from taiwanese_sandhi_cpal import apply_taiwanese_sandhi
+from 臺灣言語工具.語音合成 import 台灣話口語講法
 from 臺灣言語工具.音標系統.閩南語.臺灣閩南語羅馬字拼音 import (
     臺灣閩南語羅馬字拼音
 )
@@ -169,42 +169,6 @@ def sandhi_poj_from_tailo_and_internal(tailo: str, sandhi_str: str) -> str:
 
     return "".join(out)
 
-def apply_taiwanese_sandhi(sentence):
-    result = sentence.轉音(
-        臺灣閩南語羅馬字拼音,
-        函式='音值'
-    )
-
-    decisions = 變調判斷.判斷(result)
-    index = 0
-
-    for word, original_word in zip(
-        result.網出詞物件(),
-        sentence.網出詞物件()
-    ):
-        new_chars = []
-
-        for char, original_char in zip(
-            word.內底字,
-            original_word.內底字
-        ):
-            rule = decisions[index]
-
-            if rule == 變調判斷.愛提掉的:
-                pass
-            else:
-                if char.音 == (None,):
-                    new_chars.append(original_char.khóopih字())
-                else:
-                    char.音 = ''.join(rule.變調(char.音))
-                    new_chars.append(char)
-
-            index += 1
-
-        word.內底字 = new_chars
-
-    return result.看音()
-
 
 def analyze(text: str):
     tau = tàuphahjī(text)
@@ -214,7 +178,7 @@ def analyze(text: str):
     segmentation = tau["分詞"]
 
     sentence = 拆文分析器.建立句物件(hanji, tailo)
-    sandhi = apply_taiwanese_sandhi(sentence)
+    sandhi = 台灣話口語講法(sentence)
 
     poj_original = tailo_text_to_poj(tailo)
     poj_sandhi = sandhi_poj_from_tailo_and_internal(tailo, sandhi)
