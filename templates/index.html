@@ -1,184 +1,305 @@
 <!doctype html>
 <html lang="ko">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>대만어 변조 분석기</title>
-  <meta name="description" content="Tau-Phah-Ji와 臺灣言語工具를 이용한 대만어 연독변조 분석기">
-  <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-  <main class="shell">
-    <header class="header">
-      <h1>대만어 변조 분석기</h1>
-      <p>한자 문장을 입력하면 공식 로마자 표기, 단어 분절, 변조 결과를 함께 표시합니다.</p>
-    </header>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>대만어 변조 분석기</title>
+    <meta
+      name="description"
+      content="Tau-Phah-Ji와 臺灣言語工具를 이용한 대만어 연독변조 분석기"
+    />
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="header">
+        <h1>대만어 변조 분석기</h1>
+        <p>
+          한자 문장을 입력하면 공식 로마자 표기, 단어 분절, 변조 결과를 함께
+          표시합니다.
+        </p>
+      </header>
 
-    <section class="input-block">
-      <label for="input">대만어 한자 문장</label>
-      <textarea id="input" rows="3" spellcheck="false" placeholder="例：人生的無奈,咱嘛是愛忍耐"></textarea>
-      <div class="actions">
-        <button id="analyze" class="primary">분석</button>
-        <button id="sample" class="secondary">예문</button>
-        <span id="status" aria-live="polite"></span>
-      </div>
-    </section>
-
-    <section id="results" class="results hidden" aria-live="polite">
-      <section class="result-section">
-        <h2>공식 표기</h2>
-        <div class="row">
-          <span class="label">Tai-lo</span>
-          <code id="tailo"></code>
-          <button class="copy" data-copy="tailo">복사</button>
-        </div>
-        <div class="row">
-          <span class="label">POJ</span>
-          <code id="poj"></code>
-          <button class="copy" data-copy="poj">복사</button>
+      <section class="input-block">
+        <label for="input">대만어 한자 문장</label>
+        <textarea
+          id="input"
+          rows="3"
+          spellcheck="false"
+          placeholder="例：人生的無奈,咱嘛是愛忍耐"
+        ></textarea>
+        <div class="actions">
+          <button id="analyze" class="primary">분석</button>
+          <button id="sample" class="secondary">예문</button>
+          <span id="status" aria-live="polite"></span>
         </div>
       </section>
 
-      <section class="result-section">
-        <h2>단어 분절 <span class="han">(分詞)</span></h2>
-        <div class="row single">
-          <code id="segmentation"></code>
-          <button class="copy" data-copy="segmentation">복사</button>
-        </div>
-      </section>
-
-      <section class="result-section">
-        <h2>변조 결과</h2>
-        <div class="row">
-          <span class="label">변조 결과</span>
-          <code id="sandhi"></code>
-          <button class="copy" data-copy="sandhi">복사</button>
-        </div>
-        <div class="row">
-          <span class="label">POJ 전사</span>
-          <code id="pojSandhi"></code>
-          <button class="copy" data-copy="pojSandhi">복사</button>
-        </div>
-      </section>
-    </section>
-
-    <div id="external-tools" class="external-tools hidden">
-      <a id="suisiann-link" href="#" target="_blank" rel="noopener noreferrer">SuiSiann에서 들어보기 ↗</a>
-    </div>
-
-    <aside class="notes">
-      <p><strong>POJ 전사</strong>는 내부 변조 결과를 읽기 쉽게 POJ로 다시 표시한 파생 표기입니다. 실제 음향 결과 자체를 전사한 것은 아닙니다.</p>
-      <p>내부 tone 10은 POJ 전사에서 checked tone 4 표기형으로 표시하며, 내부 값은 위의 <strong>변조 결과</strong>에 그대로 남깁니다.</p>
-    </aside>
-
-    <footer>
-      <span>Powered by <strong>臺灣言語工具</strong> · <strong>Tau-Phah-Ji</strong></span>
-      <span class="footer-sep">·</span>
-      <button id="license-open" class="footer-link" type="button">Licenses</button>
-    </footer>
-
-    <dialog id="license-dialog" class="license-dialog">
-      <div class="license-head">
-        <h2>Open-source licenses</h2>
-        <button id="license-close" class="dialog-close" type="button" aria-label="닫기">닫기</button>
-      </div>
-      <div class="license-body">
-        <section>
-          <h3>臺灣言語工具</h3>
-          <p>Copyright (C) 2013 意傳文化科技. All Rights Reserved.</p>
-          <p>Common Public Attribution License 1.0 (CPAL-1.0)</p>
-          <p>Original attribution: 臺灣言語工具 · http://意傳.台灣/</p>
-          <p><a href="https://github.com/i3thuan5/tai5-uan5_gian5-gi2_kang1-ku7" target="_blank" rel="noopener noreferrer">Source / License ↗</a></p>
+      <section id="results" class="results hidden" aria-live="polite">
+        <section class="result-section">
+          <h2>공식 표기</h2>
+          <div class="row">
+            <span class="label">Tai-lo</span>
+            <code id="tailo"></code>
+            <button class="copy" data-copy="tailo">복사</button>
+          </div>
+          <div class="row">
+            <span class="label">POJ</span>
+            <code id="poj"></code>
+            <button class="copy" data-copy="poj">복사</button>
+          </div>
         </section>
-        <section>
-          <h3>Tau-Phah-Ji-Command</h3>
-          <p>Copyright (c) 2019 Wenli Tsai</p>
-          <p>MIT License</p>
-          <p><a href="https://github.com/i3thuan5/TauPhahJi-Command" target="_blank" rel="noopener noreferrer">Source / License ↗</a></p>
+
+        <section class="result-section">
+          <h2>단어 분절 <span class="han">(分詞)</span></h2>
+          <div class="row single">
+            <code id="segmentation"></code>
+            <button class="copy" data-copy="segmentation">복사</button>
+          </div>
         </section>
-        <p class="license-note">Third-party components remain subject to their respective licenses. See NOTICE.md in the source repository for details.</p>
+
+        <section class="result-section">
+          <h2>변조 결과</h2>
+
+          <div class="row">
+            <span class="label">변조 결과</span>
+            <code id="sandhi"></code>
+            <button class="copy" data-copy="sandhi">복사</button>
+          </div>
+
+          <div class="row">
+            <span class="label">Tai-lo 전사</span>
+            <code id="tailoSandhi"></code>
+            <button class="copy" data-copy="tailoSandhi">복사</button>
+          </div>
+
+          <div class="row">
+            <span class="label">POJ 전사</span>
+            <code id="pojSandhi"></code>
+            <button class="copy" data-copy="pojSandhi">복사</button>
+          </div>
+        </section>
+      </section>
+
+      <div id="external-tools" class="external-tools hidden">
+        <a id="suisiann-link" href="#" target="_blank" rel="noopener noreferrer"
+          >SuiSiann에서 들어보기 ↗</a
+        >
       </div>
-    </dialog>
-  </main>
 
-<script>
-const $ = (id) => document.getElementById(id);
-const input = $('input');
-const analyzeBtn = $('analyze');
-const sampleBtn = $('sample');
-const status = $('status');
-const results = $('results');
-const externalTools = $('external-tools');
-const suisiannLink = $('suisiann-link');
+      <aside class="notes">
+        <p>
+          <strong>Tai-lo / POJ 전사</strong>는 내부 변조 결과를 읽기 쉽게
+          Tai-lo와 POJ로 다시 표시한 파생 표기입니다. 실제 음향 결과 자체를
+          전사한 것은 아닙니다.
+        </p>
+        <p>
+          내부 tone 10은 POJ 전사에서 checked tone 4 표기형으로 표시하며, 내부
+          값은 위의 <strong>변조 결과</strong>에 그대로 남깁니다.
+        </p>
+      </aside>
 
-const fields = {
-  tailo: 'Tai-lo原',
-  poj: 'POJ原',
-  segmentation: '通사구조',
-  sandhi: '變調',
-  pojSandhi: 'POJ變調'
-};
+      <footer>
+        <span>
+          <button id="usage-open" class="footer-link" type="button">
+            <b>[ 사용 안내 ]</b>
+          </button>
+          <span class="footer-sep">·</span>
+        </span>
+        <span
+          >Powered by <strong>臺灣言語工具</strong> ·
+          <strong>Tau-Phah-Ji</strong></span
+        >
+        <span class="footer-sep">·</span>
+        <button id="license-open" class="footer-link" type="button">
+          Licenses
+        </button>
+      </footer>
 
-async function runAnalysis() {
-  const text = input.value.trim();
-  if (!text) {
-    status.textContent = '문장을 입력하세요.';
-    input.focus();
-    return;
-  }
+      <dialog id="usage-dialog" class="license-dialog">
+        <div class="license-head">
+          <h2>사용 안내</h2>
+          <button
+            id="usage-close"
+            class="dialog-close"
+            type="button"
+            aria-label="닫기"
+          >
+            닫기
+          </button>
+        </div>
 
-  analyzeBtn.disabled = true;
-  status.textContent = '분석 중…';
-  results.classList.add('hidden');
+        <div class="license-body">
+          <p>
+            이 도구는 대만어 연독변조의 정답을 제공하기 위한 것이 아니라, 변조
+            규칙을 학습하고 결과를 확인하기 위한 보조 도구입니다.
+          </p>
+          <br />
+          <p>
+            이 도구가 사용하는 변조 방식과 관련된 연구에서는 테스트 데이터 기준
+            약 89%의 정확도가 보고되었습니다. 따라서 실제 화자의 발화와 다른
+            결과가 출력될 수 있습니다.
+          </p>
+          <br />
+          <p>
+            학습할 때는 원래 성조 표기를 보고 먼저 직접 변조를 추측한 뒤,
+            프로그램의 결과를 확인하고, 마지막으로 실제 화자의 발화와 비교하는
+            방식으로 사용하는 것을 권장합니다.
+          </p>
+          <br />
+          <p>
+            프로그램의 출력은 항상 정답으로 간주하기보다, 변조의 방향을 확인하기
+            위한 참고 자료로 활용해 주세요.
+          </p>
+        </div>
+      </dialog>
 
-  try {
-    const response = await fetch('/api/analyze', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({text})
-    });
-    const data = await response.json();
-    if (!response.ok || !data.ok) throw new Error(data.error || '분석에 실패했습니다.');
+      <dialog id="license-dialog" class="license-dialog">
+        <div class="license-head">
+          <h2>Open-source licenses</h2>
+          <button
+            id="license-close"
+            class="dialog-close"
+            type="button"
+            aria-label="닫기"
+          >
+            닫기
+          </button>
+        </div>
+        <div class="license-body">
+          <section>
+            <h3>臺灣言語工具</h3>
+            <p>Copyright (C) 2013 意傳文化科技. All Rights Reserved.</p>
+            <p>Common Public Attribution License 1.0 (CPAL-1.0)</p>
+            <p>Original attribution: 臺灣言語工具 · http://意傳.台灣/</p>
+            <p>
+              <a
+                href="https://github.com/i3thuan5/tai5-uan5_gian5-gi2_kang1-ku7"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Source / License ↗</a
+              >
+            </p>
+          </section>
+          <section>
+            <h3>Tau-Phah-Ji-Command</h3>
+            <p>Copyright (c) 2019 Wenli Tsai</p>
+            <p>MIT License</p>
+            <p>
+              <a
+                href="https://github.com/i3thuan5/TauPhahJi-Command"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Source / License ↗</a
+              >
+            </p>
+          </section>
+          <p class="license-note">
+            Third-party components remain subject to their respective licenses.
+            See NOTICE.md in the source repository for details.
+          </p>
+        </div>
+      </dialog>
+    </main>
 
-    const r = data.result;
-    Object.entries(fields).forEach(([elementId, key]) => {
-      $(elementId).textContent = r[key] ?? '';
-    });
-    results.classList.remove('hidden');
-    suisiannLink.href = 'https://suisiann.ithuan.tw/%E8%AC%9B/' + encodeURIComponent(text);
-    externalTools.classList.remove('hidden');
-    status.textContent = '';
-  } catch (err) {
-    status.textContent = err.message;
-  } finally {
-    analyzeBtn.disabled = false;
-  }
-}
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const input = $("input");
+      const analyzeBtn = $("analyze");
+      const sampleBtn = $("sample");
+      const status = $("status");
+      const results = $("results");
+      const externalTools = $("external-tools");
+      const suisiannLink = $("suisiann-link");
 
-analyzeBtn.addEventListener('click', runAnalysis);
-sampleBtn.addEventListener('click', () => {
-  input.value = '人生的無奈,咱嘛是愛忍耐';
-  input.focus();
-});
-input.addEventListener('keydown', (event) => {
-  if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') runAnalysis();
-});
+      const fields = {
+        tailo: "Tai-lo原",
+        poj: "POJ原",
+        segmentation: "分詞",
+        sandhi: "變調",
+        tailoSandhi: "Tai-lo變調",
+        pojSandhi: "POJ變調",
+      };
 
-$('license-open').addEventListener('click', () => $('license-dialog').showModal());
-$('license-close').addEventListener('click', () => $('license-dialog').close());
-$('license-dialog').addEventListener('click', (event) => {
-  if (event.target === $('license-dialog')) $('license-dialog').close();
-});
+      async function runAnalysis() {
+        const text = input.value.trim();
+        if (!text) {
+          status.textContent = "문장을 입력하세요.";
+          input.focus();
+          return;
+        }
 
-document.querySelectorAll('.copy').forEach((button) => {
-  button.addEventListener('click', async () => {
-    const target = $(button.dataset.copy);
-    await navigator.clipboard.writeText(target.textContent);
-    const old = button.textContent;
-    button.textContent = '완료';
-    setTimeout(() => button.textContent = old, 800);
-  });
-});
-</script>
-</body>
+        analyzeBtn.disabled = true;
+        status.textContent = "분석 중…";
+        results.classList.add("hidden");
+
+        try {
+          const response = await fetch("/api/analyze", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text }),
+          });
+          const data = await response.json();
+          if (!response.ok || !data.ok)
+            throw new Error(data.error || "분석에 실패했습니다.");
+
+          const r = data.result;
+          Object.entries(fields).forEach(([elementId, key]) => {
+            $(elementId).textContent = r[key] ?? "";
+          });
+          results.classList.remove("hidden");
+          suisiannLink.href =
+            "https://suisiann.ithuan.tw/%E8%AC%9B/" + encodeURIComponent(text);
+          externalTools.classList.remove("hidden");
+          status.textContent = "";
+        } catch (err) {
+          status.textContent = err.message;
+        } finally {
+          analyzeBtn.disabled = false;
+        }
+      }
+
+      analyzeBtn.addEventListener("click", runAnalysis);
+      sampleBtn.addEventListener("click", () => {
+        input.value = "人生的無奈,咱嘛是愛忍耐";
+        input.focus();
+      });
+      input.addEventListener("keydown", (event) => {
+        if ((event.ctrlKey || event.metaKey) && event.key === "Enter")
+          runAnalysis();
+      });
+
+      $("license-open").addEventListener("click", () =>
+        $("license-dialog").showModal(),
+      );
+      $("license-close").addEventListener("click", () =>
+        $("license-dialog").close(),
+      );
+      $("license-dialog").addEventListener("click", (event) => {
+        if (event.target === $("license-dialog")) $("license-dialog").close();
+      });
+
+      $("usage-open").addEventListener("click", () =>
+        $("usage-dialog").showModal(),
+      );
+
+      $("usage-close").addEventListener("click", () =>
+        $("usage-dialog").close(),
+      );
+
+      $("usage-dialog").addEventListener("click", (event) => {
+        if (event.target === $("usage-dialog")) $("usage-dialog").close();
+      });
+
+      document.querySelectorAll(".copy").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const target = $(button.dataset.copy);
+          await navigator.clipboard.writeText(target.textContent);
+          const old = button.textContent;
+          button.textContent = "완료";
+          setTimeout(() => (button.textContent = old), 800);
+        });
+      });
+    </script>
+  </body>
 </html>

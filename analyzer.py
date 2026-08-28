@@ -126,11 +126,11 @@ def change_tone_numeric_tailo(syllable: str, new_tone: str) -> str:
     return f"{prefix}{obj.聲}{obj.韻}{display_tone}"
 
 
-def sandhi_poj_from_tailo_and_internal(tailo: str, sandhi_str: str) -> str:
-    """
-    원래 臺羅 음절열 + 내부 변조 tone label을 합쳐
-    '변조된 성조를 POJ 본성조 표기법으로 표시'한 문자열 생성.
-    """
+def sandhi_transcription_from_tailo_and_internal(
+    tailo: str,
+    sandhi_str: str,
+    output: str,
+) -> str:
     tones = extract_sandhi_tones(sandhi_str)
     tokens = split_tailo_syllables(tailo)
 
@@ -138,13 +138,18 @@ def sandhi_poj_from_tailo_and_internal(tailo: str, sandhi_str: str) -> str:
     tone_idx = 0
 
     for tok in tokens:
-        # 구분기호/문장부호
-        if re.fullmatch(r"[ \t\-]+|[，。！？!?、；;：:（）()\[\]「」『』…]", tok):
+        if re.fullmatch(
+            r"[ \t\-]+|[，。！？!?、；;：:（）()\[\]「」『』…]",
+            tok,
+        ):
             out.append(tok)
             continue
 
-        # punctuation이 뒤에 붙은 경우 분리
-        m = re.match(r"^(.*?)([^\w\u00C0-\u02FF\u0300-\u036Fⁿ͘]*)$", tok, re.UNICODE)
+        m = re.match(
+            r"^(.*?)([^\w\u00C0-\u02FF\u0300-\u036Fⁿ͘]*)$",
+            tok,
+            re.UNICODE,
+        )
         core = m.group(1) if m else tok
         tail = m.group(2) if m else ""
 
@@ -153,18 +158,31 @@ def sandhi_poj_from_tailo_and_internal(tailo: str, sandhi_str: str) -> str:
             continue
 
         if tone_idx >= len(tones):
-            # 혹시 내부 STR과 음절 수가 다르면 원형 POJ로 안전하게 표시
-            out.append(tailo_to_poj_syllable(core) + tail)
+            if output == "poj":
+                out.append(tailo_to_poj_syllable(core) + tail)
+            else:
+                obj = 臺灣閩南語羅馬字拼音(core)
+                out.append((obj.轉調符() or core) + tail)
             continue
 
-        numeric_tailo = change_tone_numeric_tailo(core, tones[tone_idx])
-        poj_obj = 臺灣閩南語羅馬字拼音(numeric_tailo)
-        poj = poj_obj.轉白話字()
+        numeric_tailo = change_tone_numeric_tailo(
+            core,
+            tones[tone_idx],
+        )
 
-        if poj is None:
-            poj = numeric_tailo
+        obj = 臺灣閩南語羅馬字拼音(numeric_tailo)
 
-        out.append(poj + tail)
+        if output == "poj":
+            rendered = obj.轉白話字()
+        elif output == "tailo":
+            rendered = obj.轉調符()
+        else:
+            raise ValueError(f"Unsupported output format: {output}")
+
+        if rendered is None:
+            rendered = numeric_tailo
+
+        out.append(rendered + tail)
         tone_idx += 1
 
     return "".join(out)
@@ -181,14 +199,21 @@ def analyze(text: str):
     sandhi = 台灣話口語講法(sentence)
 
     poj_original = tailo_text_to_poj(tailo)
-    poj_sandhi = sandhi_poj_from_tailo_and_internal(tailo, sandhi)
+    tailo_sandhi = sandhi_transcription_from_tailo_and_internal(
+        tailo, sandhi, "tailo"
+    )
+
+    poj_sandhi = sandhi_transcription_from_tailo_and_internal(
+        tailo, sandhi, "poj"
+    )
 
     return {
         "漢字": hanji,
         "Tai-lo原": tailo,
         "POJ原": poj_original,
-        "通사구조": segmentation,
+        "分詞": segmentation,
         "變調": sandhi,
+        "Tai-lo變調": tailo_sandhi,
         "POJ變調": poj_sandhi,
     }
 

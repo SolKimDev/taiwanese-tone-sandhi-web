@@ -58,7 +58,7 @@ curl -X POST http://localhost:8000/api/analyze \
 
 - `Tai-lo原`
 - `POJ原`
-- `通사구조`
+- `分詞`
 - `變調`
 - `POJ變調`
 
@@ -73,6 +73,5 @@ curl -X POST http://localhost:8000/api/analyze \
 
 각 의존성의 저작권 고지와 라이선스 정보는 `NOTICE.md`를 참조하세요. 제3자 구성요소에는 각각의 원 라이선스가 계속 적용됩니다.
 
-현재 웹앱은 臺灣言語工具를 수정하지 않고 Python 라이브러리로 사용합니다. 향후 ARM64/Raspberry Pi 호환성 등을 위해 臺灣言語工具의 코드를 수정·추출하여 별도 경량판을 배포하는 경우, 해당 Covered Code는 CPAL-1.0 조건에 따라 별도로 공개·고지해야 합니다.
-
+현재 웹앱은 臺灣言語工具를 수정하지 않고 Python 라이브러리로 사용합니다.
 SuiSiann은 이 프로젝트에 포함하거나 백엔드 API로 호출하지 않으며, 사용자가 입력한 문장을 SuiSiann 웹사이트에서 확인할 수 있는 외부 링크만 제공합니다.
