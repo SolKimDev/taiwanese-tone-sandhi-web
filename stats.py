@@ -9,6 +9,11 @@ from datetime import datetime, timedelta, timezone
 LOG_FILE = "/var/log/nginx/taiwanese-tone-sandhi.access.log"
 API_PATH = "/api/analyze"
 
+IGNORED_SECURITY_PATHS = {
+    "/favicon.ico",
+    "/robots.txt",
+}
+
 # 현재 Gunicorn worker 수
 EXPECTED_WORKERS = 2
 
@@ -283,6 +288,7 @@ def main():
     suspicious_paths = Counter(
         entry["path"]
         for entry in security_entries
+        if entry["path"] not in IGNORED_SECURITY_PATHS
     )
 
     # ---------------------------------------------------------------
