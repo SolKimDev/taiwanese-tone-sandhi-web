@@ -35,3 +35,17 @@ and license notice must be preserved as required by that license.
 This application may provide a normal external link to the SuiSiann website
 for listening/comparison. SuiSiann is not bundled with this project and its
 TTS service is not called by this application's backend.
+
+Derived CPAL-covered code
+-------------------------
+
+taiwanese_sandhi_cpal.py contains code adapted from 臺灣言語工具.
+
+Original project:
+https://github.com/i3thuan5/tai5-uan5_gian5-gi2_kang1-ku7
+
+License:
+Common Public Attribution License 1.0 (CPAL-1.0)
+
+The source code of this modification is distributed with this repository.
+See LICENSE-CPAL-1.0.
