@@ -30,10 +30,11 @@ def api_analyze():
 
     try:
         result = analyze(text)
-    except Exception as exc:
+    except Exception:
+        app.logger.exception("Analysis failed")
         return jsonify({
             "ok": False,
-            "error": f"{type(exc).__name__}: {exc}",
+            "error": "분석 중 오류가 발생했습니다."
         }), 500
 
     return jsonify({"ok": True, "result": result})
