@@ -125,6 +125,25 @@ input.addEventListener("keydown", (event) => {
   if ((event.ctrlKey || event.metaKey) && event.key === "Enter") runAnalysis();
 });
 
+suisiannLink.addEventListener("click", (event) => {
+  const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+
+  // 모바일에서는 HTML의 target="_blank" 동작 그대로 사용
+  if (!isDesktop) return;
+
+  event.preventDefault();
+
+  const popup = window.open(
+    suisiannLink.href,
+    "suisiann-player",
+    "width=630,height=790,resizable=yes,scrollbars=yes",
+  );
+
+  if (popup) {
+    popup.focus();
+  }
+});
+
 $("license-open").addEventListener("click", () =>
   $("license-dialog").showModal(),
 );
