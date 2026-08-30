@@ -47,29 +47,29 @@ const translations = {
   },
 
   "zh-TW": {
-    title: "台語變調分析器",
-    description: "輸入台語漢字句子，即可查看羅馬字、分詞與連讀變調結果。",
+    title: "臺灣台語變調分析器",
+    description: "輸入臺灣台語漢字句，即可查看羅馬字、分詞與連續變調結果。",
 
-    inputLabel: "台語漢字句子",
+    inputLabel: "臺灣台語漢字句",
     analyze: "分析",
     sample: "例句",
 
-    officialNotation: "原始標記",
-    segmentation: "單詞分節",
+    officialNotation: "原始標音",
+    segmentation: "分詞",
     sandhiResult: "變調結果",
     tailoTranscription: "台羅轉寫",
     pojTranscription: "白話字轉寫",
     copy: "複製",
 
-    listenSuisiann: "在 SuiSiann 聽看看 ↗",
+    listenSuisiann: "到 SuiSiann 聽看看 ↗",
 
     transcriptionBefore: "",
     transcriptionTerm: "台羅／白話字轉寫",
     transcriptionNote:
-      "是將內部變調結果重新以較易閱讀的台羅與白話字表示的衍生標記，並不是對實際語音結果的直接轉寫。",
+      "是將內部變調結果重新以較容易閱讀的台羅與白話字呈現的衍生標記，並不是對實際語音的直接轉寫。",
 
     tone10Before:
-      "內部 tone 10 在台羅／白話字轉寫中以 checked tone 4 的形式顯示；內部數值則保留於上方的",
+      "內部 tone 10 在台羅／白話字轉寫中以 checked tone 4 的形式顯示；內部數值則保留在上方的",
     tone10After: "中。",
 
     usage: "[ 使用說明 ]",
@@ -78,13 +78,13 @@ const translations = {
 
     usageTitle: "使用說明",
     usage1:
-      "這個工具並不是用來提供台語連讀變調的標準答案，而是協助學習變調規則與確認結果的輔助工具。",
+      "這個工具並不是用來提供臺灣台語連續變調的標準答案，而是協助學習變調規則與確認結果的輔助工具。",
     usage2:
-      "相關的變調演算法研究在測試資料中報告了 88.90% 的正確率。這並不代表目前這個網站本身的正確率，程式輸出的結果仍可能與實際發音不同。",
+      "相關變調演算法研究在測試資料中報告了 88.90% 的正確率。這並不代表目前這個網站本身的正確率，程式輸出的結果仍可能與實際發音不同。",
     usage3:
-      "學習時，建議先根據原本的聲調標記自行推測變調，再確認程式計算出的結果，最後與真人實際說話的錄音進行比較。",
+      "學習時，建議先根據原本的聲調標記自行推測變調，再確認程式計算出的結果，最後與實際使用者的發音進行比較。",
     usage4:
-      "請不要將程式輸出一律視為正確答案，而是把它當作確認變調方向並與實際發音比較的參考資料。",
+      "請不要將程式輸出一律視為正確答案，而是將它作為確認變調方向並與實際發音比較的參考資料。",
 
     emptyInput: "請輸入句子。",
     analyzing: "分析中…",
@@ -93,11 +93,11 @@ const translations = {
   },
 
   en: {
-    title: "Taiwanese Tone Sandhi Analyzer",
+    title: "Taiwanese (Taigi) Tone Sandhi Analyzer",
     description:
-      "Enter a Taiwanese Hokkien sentence in Han characters to view romanization, word segmentation, and tone sandhi results.",
+      "Enter a Taiwanese (Taigi) sentence in Han characters to view romanization, word segmentation, and tone sandhi results.",
 
-    inputLabel: "Taiwanese Hokkien sentence in Han characters",
+    inputLabel: "Taiwanese (Taigi) sentence in Han characters",
     analyze: "Analyze",
     sample: "Example",
 
@@ -125,7 +125,7 @@ const translations = {
 
     usageTitle: "Usage",
     usage1:
-      "This tool is intended as an aid for learning and checking Taiwanese Hokkien tone sandhi, not as a source of definitive answers.",
+      "This tool is intended as an aid for learning and checking Taiwanese (Taigi) tone sandhi, not as a source of definitive answers.",
     usage2:
       "Related research on a tone-sandhi algorithm reported an accuracy of 88.90% on test data. This figure does not represent the accuracy of this web app itself, and its output may differ from actual speech.",
     usage3:
